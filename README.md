@@ -9,7 +9,7 @@ Thuật toán lai dùng ngưỡng `CUTOFF`: khi mảng con thoả `hi <= lo + CU
 - `CUTOFF` quá nhỏ: số lời gọi đệ quy và số lần `merge` quá nhiều.
 - `CUTOFF` quá lớn: chi phí $\Theta(k^2)$ của Insertion Sort chiếm ưu thế.
 
-**Câu hỏi nghiên cứu:** trên cấu hình máy cá nhân này, `CUTOFF` tối ưu $k^*$ là bao nhiêu và nó khác thế nào so với `7` (giáo trình cũ) và `10` (giáo trình mới)? $k^*$ thay đổi ra sao theo $N$ và theo dạng phân phối dữ liệu?
+**Câu hỏi nghiên cứu:** trên cấu hình máy cá nhân này, `CUTOFF` tối ưu $k^{\ast}$ là bao nhiêu và nó khác thế nào so với `7` (giáo trình cũ) và `10` (giáo trình mới)? $k^{\ast}$ thay đổi ra sao theo $N$ và theo dạng phân phối dữ liệu?
 
 ## 2. Môi trường & Thiết kế thực nghiệm
 
@@ -64,7 +64,7 @@ Nguồn: `results/summary_random_1M.csv`. Đơn vị: ms.
 | 5 | 343,30 | 10,98 | 340,79 | 336,43 | 6,83% |
 | 6 | 343,48 | 9,07 | 340,33 | 335,02 | 6,78% |
 | **7** (giáo trình cũ) | 341,74 | 9,38 | 339,10 | 335,20 | 7,25% |
-| **8** ($k^*$) | **337,21** | **5,61** | 336,15 | 331,37 | **8,48%** |
+| **8** ($k^{\ast}$) | **337,21** | **5,61** | 336,15 | 331,37 | **8,48%** |
 | 9 | 341,72 | 15,67 | 337,23 | 329,76 | 7,26% |
 | **10** (giáo trình mới) | 338,45 | 10,63 | 335,31 | 330,22 | 8,15% |
 | 11 | 340,13 | 7,84 | 337,44 | 332,20 | 7,69% |
@@ -106,28 +106,28 @@ Nguồn: `results/optimal_cutoffs_all.csv` (tối ưu xét theo thời gian trun
 
 ![Biểu đồ 1: Ảnh hưởng của CUTOFF đến thời gian chạy Mergesort (Random, N = 1.000.000)](results/chart1_u_curve_1M.png)
 
-**Biểu đồ 1** (`random`, $N = 10^6$): thời gian giảm nhanh từ $\mu = 368{,}47$ ms ($k=1$) xuống $\approx 344$ ms ở $k=4$, sau đó tạo một **vùng phẳng** từ $k = 4$ đến $k = 14$ ($\mu \approx 337$–$344$ ms). Đáy đo được là $k=8$ ($337{,}21$ ms), sát với $k=13$ ($337{,}28$ ms) và $k=14$ ($337{,}93$ ms). Từ $k = 15$ thời gian tăng đột ngột, kèm độ lệch chuẩn lớn ($\sigma = 53{,}95$ ms tại $k=15$), đỉnh tại $k=16$ ($398{,}58$ ms), rồi dao động ở mức $355$–$370$ ms với $k = 18$–$24$ và tăng lên $\approx 394$–$397$ ms với $k \ge 32$.
+**Biểu đồ 1** (`random`, $N = 10^6$): thời gian giảm nhanh từ $\mu = 368{,}47$ ms ($k=1$) xuống $\approx 344$ ms ở $k=4$, sau đó tạo một **vùng phẳng** từ $k = 4$ đến $k = 14$ ($\mu \approx 337\text{–}344$ ms). Đáy đo được là $k=8$ ($337{,}21$ ms), sát với $k=13$ ($337{,}28$ ms) và $k=14$ ($337{,}93$ ms). Từ $k = 15$ thời gian tăng đột ngột, kèm độ lệch chuẩn lớn ($\sigma = 53{,}95$ ms tại $k=15$), đỉnh tại $k=16$ ($398{,}58$ ms), rồi dao động ở mức $355\text{–}370$ ms với $k = 18\text{–}24$ và tăng lên $\approx 394\text{–}397$ ms với $k \ge 32$.
 
 ![Biểu đồ 2: Tỷ lệ thời gian chạy theo CUTOFF qua các kích thước N (Random)](results/chart2_multi_n.png)
 
-**Biểu đồ 2** (`random`, thời gian chuẩn hoá $T_k/T_1$): với $N = 50\,000$; $100\,000$; $500\,000$ đường cong giảm mạnh ngay từ $k = 1 \to 3$ và đạt khoảng $0{,}71$–$0{,}76$ ở vùng tối ưu (tức nhanh hơn baseline khoảng 24–29%). Với $N = 10^6$, mức giảm khiêm tốn hơn (đáy $\approx 0{,}915$ tại $k=8$, khớp $337{,}21/368{,}47$) và đường cong vượt trên $1{,}0$ khi $k \ge 15$ (riêng $k=18$–$20$ còn dưới $1{,}0$). Ở $k = 64$ mọi đường đều quay lên (khoảng $0{,}78$–$0{,}84$ với $N \le 5\cdot10^5$, $\approx 1{,}08$ với $N = 10^6$). Các giá trị đọc từ biểu đồ là xấp xỉ.
+**Biểu đồ 2** (`random`, thời gian chuẩn hoá $T_k/T_1$): với $N = 50\,000$; $100\,000$; $500\,000$ đường cong giảm mạnh ngay từ $k = 1 \to 3$ và đạt khoảng $0{,}71\text{–}0{,}76$ ở vùng tối ưu (tức nhanh hơn baseline khoảng 24–29%). Với $N = 10^6$, mức giảm khiêm tốn hơn (đáy $\approx 0{,}915$ tại $k=8$, khớp $337{,}21/368{,}47$) và đường cong vượt trên $1{,}0$ khi $k \ge 15$ (riêng $k=18\text{–}20$ còn dưới $1{,}0$). Ở $k = 64$ mọi đường đều quay lên (khoảng $0{,}78\text{–}0{,}84$ với $N \le 5\cdot10^5$, $\approx 1{,}08$ với $N = 10^6$). Các giá trị đọc từ biểu đồ là xấp xỉ.
 
 ![Biểu đồ 3: Thời gian chạy Mergesort theo CUTOFF trên các loại dữ liệu (N = 1.000.000)](results/chart3_data_types.png)
 
-**Biểu đồ 3** ($N = 10^6$, 4 phân phối): `random` có thời gian cao nhất ($\approx 340$–$400$ ms). `nearly_sorted` giảm gần như đơn điệu khi $k$ tăng (từ $\approx 186$ ms ở $k=1$ xuống $137{,}6$ ms ở $k=64$). `reverse` có đáy ở $k$ nhỏ rồi tăng mạnh khi $k \ge 24$ (đỉnh $\approx 317$ ms tại $k=64$). `duplicates` giảm nhẹ từ $\approx 212$ ms ở $k=1$ xuống khoảng $183$–$190$ ms ở $k = 15$–$32$, rồi tăng nhẹ khi $k = 64$.
+**Biểu đồ 3** ($N = 10^6$, 4 phân phối): `random` có thời gian cao nhất ($\approx 340\text{–}400$ ms). `nearly_sorted` giảm gần như đơn điệu khi $k$ tăng (từ $\approx 186$ ms ở $k=1$ xuống $137{,}6$ ms ở $k=64$). `reverse` có đáy ở $k$ nhỏ rồi tăng mạnh khi $k \ge 24$ (đỉnh $\approx 317$ ms tại $k=64$). `duplicates` giảm nhẹ từ $\approx 212$ ms ở $k=1$ xuống khoảng $183\text{–}190$ ms ở $k = 15\text{–}32$, rồi tăng nhẹ khi $k = 64$.
 
 ## 4. Phân tích chuyên sâu & Thảo luận
 
 ### 4.1. Hình dạng đường cong chữ U
 
 - **Vùng `CUTOFF` nhỏ ($k \le 4$):** số nút đệ quy và số lần `merge` (kèm sao chép sang `aux[]`) còn lớn. Chỉ riêng việc tăng $k$ từ 1 lên 4 đã giảm thời gian trung bình 6,43% ($368{,}47 \to 344{,}79$ ms).
-- **Vùng đáy ($k \approx 4$–$14$):** lợi ích biên giảm dần, đường cong gần phẳng. Chênh lệch giữa các $k$ trong vùng này ($\approx 337$–$344$ ms) cùng cỡ với độ lệch chuẩn ($\sigma \approx 6$–$16$ ms), nên **không thể khẳng định một $k$ đơn lẻ vượt trội** nếu chỉ dựa vào trung bình.
-- **Vùng `CUTOFF` lớn ($k \ge 32$):** chi phí $\Theta(k^2)$ của Insertion Sort trên mỗi khối vượt phần tiết kiệm được; thời gian tăng lên $\approx 394$–$397$ ms, tệ hơn baseline $\approx 7$–$8\%$.
+- **Vùng đáy ($k \approx 4\text{–}14$):** lợi ích biên giảm dần, đường cong gần phẳng. Chênh lệch giữa các $k$ trong vùng này ($\approx 337\text{–}344$ ms) cùng cỡ với độ lệch chuẩn ($\sigma \approx 6\text{–}16$ ms), nên **không thể khẳng định một $k$ đơn lẻ vượt trội** nếu chỉ dựa vào trung bình.
+- **Vùng `CUTOFF` lớn ($k \ge 32$):** chi phí $\Theta(k^2)$ của Insertion Sort trên mỗi khối vượt phần tiết kiệm được; thời gian tăng lên $\approx 394\text{–}397$ ms, tệ hơn baseline $\approx 7\text{–}8\%$.
 - **Điểm bất thường tại $k=15,16$:** giá trị `min` tại $k=15$ ($330{,}00$ ms) và $k=16$ ($330{,}65$ ms) *ngang* các $k$ tốt nhất, nhưng $\mu$ và $\sigma$ tăng vọt (và median tại $k=16$ là $397{,}59$ ms). Nghĩa là các lần chạy nhanh vẫn đạt mức tối ưu, còn nhiều lần khác bị chậm hẳn. Dữ liệu hiện có không đủ để kết luận nguyên nhân; **giả thuyết** hợp lý là hành vi của JIT (quyết định biên dịch/inline khác nhau giữa các lần chạy trong cùng tiến trình) hoặc nhiễu hệ thống (GC, lập lịch Windows, nhiệt/xung nhịp trên laptop). Cần kiểm chứng bằng cách chạy lại theo thứ tự ngẫu nhiên, chạy nhiều tiến trình JVM riêng, hoặc bật `-Xlog:gc`/`-XX:+PrintCompilation`.
 
-### 4.2. So sánh $k^*$ với mốc 7 và 10 của giáo trình
+### 4.2. So sánh $k^{\ast}$ với mốc 7 và 10 của giáo trình
 
-Trên $N = 10^6$, `random`: $k^* = 8$ ($\mu = 337{,}21$ ms, $\sigma = 5{,}61$ ms, độ lệch chuẩn nhỏ nhất vùng đáy).
+Trên $N = 10^6$, `random`: $k^{\ast} = 8$ ($\mu = 337{,}21$ ms, $\sigma = 5{,}61$ ms, độ lệch chuẩn nhỏ nhất vùng đáy).
 
 | So sánh | Chênh lệch trung bình | Tương đương |
 |---|---:|---|
@@ -145,30 +145,30 @@ Theo `min`, $k=14$ ($329{,}63$ ms) và $k=9$ ($329{,}76$ ms) đạt thấp nhấ
 - **Cache (L1 384 KB tổng cộng):** với 6 nhân, đây tương ứng khoảng 64 KB mỗi nhân (gồm L1D và L1I), nên L1D nhỏ hơn con số tổng gợi ý. Đoạn mảng con có $k \lesssim 14$ phần tử tham chiếu chỉ chiếm vài trăm byte, rất dễ nằm trong L1; điều này giúp Insertion Sort chạy hiệu quả ở $k$ nhỏ.
 - **Bộ nhớ và `Integer[]`:** `Integer[]` lưu *tham chiếu*, còn các đối tượng `Integer` nằm rải rác trên heap. Mỗi `compareTo` phải dereference con trỏ, nên chi phí truy cập mỗi phần tử cao hơn mảng `int[]` và phụ thuộc vào vị trí cấp phát. Với $N = 10^6$, tập làm việc (mảng tham chiếu + `aux[]` + đối tượng `Integer`) vượt xa L2 (3,0 MB) và gần/vượt L3 (16 MB), nên các lần `merge` ở mức cao phải đọc từ RAM. Việc dùng RAM DDR5-4800 *kênh đơn* nhiều khả năng làm băng thông là điểm nghẽn, khiến việc **giảm số lượt `merge`/sao chép `aux[]`** (nhờ tăng `CUTOFF`) có lợi ích rõ rệt, phù hợp với mức giảm lớn ở $k$ nhỏ ở các $N \ge 5 \cdot 10^4$.
 - **Bộ dự đoán nhánh hiện đại (Zen 3+):** vòng lặp trong Insertion Sort ngắn và có tính lặp, trên dữ liệu `random` nhánh so sánh vẫn khó dự đoán. Phần cứng hiện đại che bớt chi phí đệ quy/gọi hàm, nên lợi ích tương đối của `CUTOFF` (7–8%) *thấp hơn* kỳ vọng thường thấy ở các máy đời cũ; đây là giải thích khả dĩ cho việc đường cong phẳng rộng.
-- **JIT của OpenJDK 25 (C2):** vòng lặp `Insertion.sort` nóng sẽ được inline/biên dịch tối ưu, giảm hằng số của nó, khiến Insertion Sort "rẻ" hơn lý thuyết và đẩy điểm hoà vốn lên cao hơn khi so với môi trường thông dịch. Quyết định inline phụ thuộc kích thước bytecode và hồ sơ chạy, có thể liên quan đến hiện tượng bất ổn tại $k = 15$–$16$ đã nêu ở 4.1 (giả thuyết, chưa kiểm chứng).
+- **JIT của OpenJDK 25 (C2):** vòng lặp `Insertion.sort` nóng sẽ được inline/biên dịch tối ưu, giảm hằng số của nó, khiến Insertion Sort "rẻ" hơn lý thuyết và đẩy điểm hoà vốn lên cao hơn khi so với môi trường thông dịch. Quyết định inline phụ thuộc kích thước bytecode và hồ sơ chạy, có thể liên quan đến hiện tượng bất ổn tại $k = 15\text{–}16$ đã nêu ở 4.1 (giả thuyết, chưa kiểm chứng).
 - **Hạn chế đo trên laptop Windows:** xung nhịp thực tế (~2,61 GHz) thấp hơn xung cơ bản, cộng với quản lý nhiệt/năng lượng và nhiễu từ OS, làm tăng $\sigma$ (đặc biệt $k \ge 15$ với $\sigma$ lên tới 54 ms).
 
 ### 4.4. Biến thiên của `CUTOFF` tối ưu theo $N$
 
-- **`random`:** $k^*$ *giảm đơn điệu* theo $N$: 20 → 16 → 15 → 13 → 8 (khi $N$ tăng từ $10^4$ đến $10^6$). Có thể do $N$ lớn khiến chi phí truy cập bộ nhớ ở các mức `merge` cao chiếm tỷ trọng lớn hơn, đồng thời Insertion Sort trên khối lớn dễ gây cache miss tham chiếu `Integer`. Cần lưu ý đường cong ở vùng đáy rất phẳng nên $k^*$ riêng lẻ nhạy với nhiễu; xu hướng giảm nên được hiểu là *"vùng tối ưu dịch dần về trái"*, không phải một quy luật chính xác.
-- **Với $N$ nhỏ** ($10^4$, `random`), $k^* = 20$ và thời gian ($1{,}57$ ms) rất ngắn nên dễ bị nhiễu tương đối lớn.
+- **`random`:** $k^{\ast}$ *giảm đơn điệu* theo $N$: 20 → 16 → 15 → 13 → 8 (khi $N$ tăng từ $10^4$ đến $10^6$). Có thể do $N$ lớn khiến chi phí truy cập bộ nhớ ở các mức `merge` cao chiếm tỷ trọng lớn hơn, đồng thời Insertion Sort trên khối lớn dễ gây cache miss tham chiếu `Integer`. Cần lưu ý đường cong ở vùng đáy rất phẳng nên $k^{\ast}$ riêng lẻ nhạy với nhiễu; xu hướng giảm nên được hiểu là *"vùng tối ưu dịch dần về trái"*, không phải một quy luật chính xác.
+- **Với $N$ nhỏ** ($10^4$, `random`), $k^{\ast} = 20$ và thời gian ($1{,}57$ ms) rất ngắn nên dễ bị nhiễu tương đối lớn.
 
 ### 4.5. Biến thiên theo dạng phân phối
 
-- **`nearly_sorted`:** $k^*$ nằm ở **biên trên của dải khảo sát** (48 với $N=10^4$, 64 với mọi $N \ge 5\cdot10^4$). Khi dữ liệu gần có thứ tự, Insertion Sort tiến gần $\Theta(k)$ thay vì $\Theta(k^2)$ nên $k$ càng lớn càng có lợi. Vì $k^*$ trùng biên 64, **giá trị tối ưu thật sự có thể lớn hơn 64** và chưa được xác định trong thí nghiệm này.
-- **`reverse`:** $k^* = 7$–$11$ với $N \le 5 \cdot 10^5$, và $4$ với $N = 10^6$. Insertion Sort ở trường hợp xấu nhất $\Theta(k^2)$ nên $k$ lớn bị phạt nặng (Biểu đồ 3 cho thấy thời gian tăng mạnh khi $k \ge 24$). Đáng chú ý, $k^*=7$ và $k^*=8$ xuất hiện ở vài kích thước.
-- **`duplicates`:** $k^* \in \{13, 13, 32, 15, 24\}$ — biến động rộng, không có xu hướng rõ theo $N$. Với chỉ 10 giá trị phân biệt, thời gian rất phẳng ở $k \approx 15$–$32$ (Biểu đồ 3), nên $k^*$ cụ thể dễ bị nhiễu quyết định.
-- **`random`** là trường hợp có $k^*$ nhỏ-trung bình (8–20) và là dạng phản ánh tốt nhất hành vi trung bình.
+- **`nearly_sorted`:** $k^{\ast}$ nằm ở **biên trên của dải khảo sát** (48 với $N=10^4$, 64 với mọi $N \ge 5\cdot10^4$). Khi dữ liệu gần có thứ tự, Insertion Sort tiến gần $\Theta(k)$ thay vì $\Theta(k^2)$ nên $k$ càng lớn càng có lợi. Vì $k^{\ast}$ trùng biên 64, **giá trị tối ưu thật sự có thể lớn hơn 64** và chưa được xác định trong thí nghiệm này.
+- **`reverse`:** $k^{\ast} = 7\text{–}11$ với $N \le 5 \cdot 10^5$, và $4$ với $N = 10^6$. Insertion Sort ở trường hợp xấu nhất $\Theta(k^2)$ nên $k$ lớn bị phạt nặng (Biểu đồ 3 cho thấy thời gian tăng mạnh khi $k \ge 24$). Đáng chú ý, $k^{\ast}=7$ và $k^{\ast}=8$ xuất hiện ở vài kích thước.
+- **`duplicates`:** $k^{\ast} \in \{13, 13, 32, 15, 24\}$ — biến động rộng, không có xu hướng rõ theo $N$. Với chỉ 10 giá trị phân biệt, thời gian rất phẳng ở $k \approx 15\text{–}32$ (Biểu đồ 3), nên $k^{\ast}$ cụ thể dễ bị nhiễu quyết định.
+- **`random`** là trường hợp có $k^{\ast}$ nhỏ-trung bình (8–20) và là dạng phản ánh tốt nhất hành vi trung bình.
 
 ## 5. Kết luận & Hướng dẫn tái lập thí nghiệm
 
 ### 5.1. Kết luận
 
-1. Với `random`, $N = 10^6$, giá trị tối ưu đo được là **`CUTOFF` $k^* = 8$** ($\mu = 337{,}21$ ms, $\sigma = 5{,}61$ ms, nhanh hơn baseline **8,48%**).
-2. Các mốc giáo trình `7` (7,25%) và `10` (8,15%) đều nằm trong vùng tối ưu; chênh lệch với $k^*$ lần lượt chỉ 1,33% và 0,37%, nhỏ hơn độ lệch chuẩn, nên **không khác biệt có ý nghĩa thực tiễn**.
+1. Với `random`, $N = 10^6$, giá trị tối ưu đo được là **`CUTOFF` $k^{\ast} = 8$** ($\mu = 337{,}21$ ms, $\sigma = 5{,}61$ ms, nhanh hơn baseline **8,48%**).
+2. Các mốc giáo trình `7` (7,25%) và `10` (8,15%) đều nằm trong vùng tối ưu; chênh lệch với $k^{\ast}$ lần lượt chỉ 1,33% và 0,37%, nhỏ hơn độ lệch chuẩn, nên **không khác biệt có ý nghĩa thực tiễn**.
 3. Vùng an toàn trên máy này là **`CUTOFF` $\in [4, 14]$**; nên tránh $k \ge 15$ (thời gian và độ biến động tăng) và $k \ge 32$ (chậm hơn baseline).
-4. **Khuyến nghị cho cấu hình này:** dùng `CUTOFF = 8` (hoặc `10` nếu muốn bám giáo trình mới) cho dữ liệu tổng quát/ngẫu nhiên. Với dữ liệu gần có thứ tự có thể dùng giá trị lớn hơn (≥ 64, cần khảo sát thêm); với dữ liệu sắp xếp ngược nên giữ nhỏ ($\approx 4$–$11$).
-5. Hạn chế: kết quả thuộc một máy, một phiên bản JVM, một `SEED`; chưa có kiểm định thống kê; $k^*$ ở `nearly_sorted` chạm biên dải khảo sát.
+4. **Khuyến nghị cho cấu hình này:** dùng `CUTOFF = 8` (hoặc `10` nếu muốn bám giáo trình mới) cho dữ liệu tổng quát/ngẫu nhiên. Với dữ liệu gần có thứ tự có thể dùng giá trị lớn hơn (≥ 64, cần khảo sát thêm); với dữ liệu sắp xếp ngược nên giữ nhỏ ($\approx 4\text{–}11$).
+5. Hạn chế: kết quả thuộc một máy, một phiên bản JVM, một `SEED`; chưa có kiểm định thống kê; $k^{\ast}$ ở `nearly_sorted` chạm biên dải khảo sát.
 
 ### 5.2. Cấu trúc thư mục dự án
 
@@ -192,6 +192,8 @@ mergesort-cutoff-experiment/
 ├── .gitignore
 └── README.md
 ```
+
+> Thư mục `ai-logs/` chưa có trong cấu trúc hiện tại của dự án; nếu đồ án yêu cầu nộp nhật ký sử dụng AI, hãy tạo thêm thư mục này.
 
 ### 5.3. Biên dịch và chạy lại
 
